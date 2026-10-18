@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arb Calculator</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Arb Calculator</h1>
+        </header>
+
+        <!-- Dynamic Filtered Timeline Accumulator Section -->
+        <div class="stats-banner">
+            <div style="text-align: center; width: 100%;">
+                <h3 style="margin:0; font-size:0.9rem; opacity:0.85; text-transform: uppercase; letter-spacing: 0.5px;">Filtered Arbitrage Revenue</h3>
+                <div id="cumulative-profit-display" class="stats-val">₦0.00</div>
+            </div>
+            
+            <div class="timeline-grid">
+                <!-- Weekday Matrix Dropdown -->
+                <div class="timeline-col">
+                    <label for="weekly-filter-select" class="timeline-label">Weekly Report</label>
+                    <select id="weekly-filter-select" class="filter-dropdown">
+                        <option value="all-week">Full Week (Mon-Sun)</option>
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                        <option value="0">Sunday</option>
+                    </select>
+                    <div id="weekly-profit-display" class="timeline-val" style="margin-top: 6px;">₦0</div>
+                </div>
+
+                <!-- Monthly Rolling Weeks Dropdown -->
+                <div class="timeline-col">
+                    <label for="monthly-filter-select" class="timeline-label">Monthly Report</label>
+                    <select id="monthly-filter-select" class="filter-dropdown">
+                        <option value="all-month">Full Month</option>
+                        <option value="w1">Week 1 (1st - 7th)</option>
+                        <option value="w2">Week 2 (8th - 14th)</option>
+                        <option value="w3">Week 3 (15th - 21st)</option>
+                        <option value="w4">Week 4 (22nd - End)</option>
+                    </select>
+                    <div id="monthly-profit-display" class="timeline-val" style="margin-top: 6px;">₦0</div>
+                </div>
+
+                <!-- Annual Months Matrix Dropdown -->
+                <div class="timeline-col">
+                    <label for="annual-filter-select" class="timeline-label">Annual Report</label>
+                    <select id="annual-filter-select" class="filter-dropdown">
+                        <option value="all-year">Full Year</option>
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                    <div id="annual-profit-display" class="timeline-val" style="margin-top: 6px;">₦0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-layout">
+            <!-- Dynamic Form Wrapper -->
+            <main class="card">
+                <h2>Calculate Entry</h2>
+                <form id="arb-form">
+                    <div class="input-group">
+                        <label for="total-investment">Total Investment (₦)</label>
+                        <input type="number" id="total-investment" value="30000" step="any" required>
+                    </div>
+
+                    <h3>Odds Field Allocator</h3>
+                    <div id="outcomes-container">
+                        <div class="outcome-row">
+                            <div class="outcome-inputs">
+                                <div class="input-group" style="margin:0;">
+                                    <label class="row-label">Odds #1</label>
+                                    <input type="number" class="outcome-odds" value="2.15" step="0.01" min="1.01" required>
+                                </div>
+                                <div class="input-group" style="margin:0;">
+                                    <label>Calculated Stake (₦)</label>
+                                    <input type="text" class="outcome-stake" placeholder="--" readonly>
+                                </div>
+                            </div>
+                            <div class="payout-display">Expected Payout: <span class="outcome-payout">₦0.00</span></div>
+                        </div>
+
+                        <div class="outcome-row">
+                            <div class="outcome-inputs">
+                                <div class="input-group" style="margin:0;">
+                                    <label class="row-label">Odds #2</label>
+                                    <input type="number" class="outcome-odds" value="1.95" step="0.01" min="1.01" required>
+                                </div>
+                                <div class="input-group" style="margin:0;">
+                                    <label>Calculated Stake (₦)</label>
+                                    <input type="text" class="outcome-stake" placeholder="--" readonly>
+                                </div>
+                            </div>
+                            <div class="payout-display">Expected Payout: <span class="outcome-payout">₦0.00</span></div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" id="add-outcome-btn" class="btn-add">+ Add More</button>
+                        <button type="submit" class="btn-primary">Calculate & Log</button>
+                    </div>
+                </form>
+                <div id="results-box" class="results-box hidden">
+                    <h3>Calculation Summary</h3>
+                    <div id="arb-status" class="status-badge"></div>
+                    <div class="results-grid">
+                        <div class="result-item font-bold"><span>Total Expected Payout:</span><span id="res-payout">--</span></div>
+                        <div class="result-item font-bold"><span>Net Profit/Loss:</span><span id="res-profit">--</span></div>
+                        <div class="result-item font-bold"><span>Return on Investment (ROI):</span><span id="res-roi">--</span></div>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="card">
+                <div class="history-header">
+                    <h2>Calculation History Log</h2>
+                    <button id="clear-history-btn" class="btn-secondary">Clear All</button>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Total Stake</th>
+                                <th>Allocated Odds</th>
+                                <th>Net Profit</th>
+                                <th style="text-align:center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

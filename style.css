@@ -1,0 +1,400 @@
+:root {
+    --bg-color: #080b10;        /* Deep trading room background dark black */
+    --card-bg: #0f141c;         /* Slate dark grey panel card block elements */
+    --primary-color: #10b981;   /* Neon profit mint green signature */
+    --primary-hover: #059669;
+    --danger-color: #ef4444;    /* Loss crimson red text indicator signatures */
+    --danger-hover: #dc2626;
+    --text-main: #f3f4f6;       /* Crisp text readability contrast */
+    --text-muted: #9ca3af;      /* Soft slate text sub-parameters descriptions */
+    --border-color: #1e293b;    /* Border line divider panels separation signature */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    padding: 16px;
+    min-height: 100vh;
+    -webkit-text-size-adjust: 100%;
+}
+
+.app-container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 6px;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 950px) {
+    .grid-layout {
+        grid-template-columns: 500px 1fr;
+    }
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+}
+
+h2, h3 {
+    margin-bottom: 14px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.input-group {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+input {
+    padding: 12px;
+    background-color: #151b26; /* Dark input panel interior */
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #ffffff;
+    outline: none;
+    width: 100%;
+    -webkit-appearance: none;
+}
+
+input:focus {
+    border-color: #3b82f6; /* Soft professional focus line signature */
+    background-color: #172030;
+}
+
+.outcome-row {
+    background: #131924;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 12px;
+}
+
+.outcome-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.payout-display {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 6px;
+    text-align: right;
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover { 
+    background-color: var(--primary-hover); 
+}
+
+.btn-add {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-add:hover { 
+    background-color: #1d4ed8; 
+}
+.btn-secondary {
+    background-color: transparent;
+    color: #f87171; /* High contrast dark red secondary color */
+    border: 1px solid #ef4444;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+}
+.btn-secondary:hover { 
+    background-color: rgba(239, 68, 68, 0.1); 
+}
+
+/* Custom override for the forest green Export button dynamically injected via JS */
+#export-csv-btn {
+    transition: filter 0.2s;
+}
+#export-csv-btn:hover {
+    filter: brightness(90%);
+}
+
+.btn-delete-row {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 24px;
+    text-align: center;
+}
+.btn-delete-row:hover { 
+    background: var(--danger-hover); 
+}
+
+.results-box {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 2px dashed var(--border-color);
+}
+
+.hidden { 
+    display: none; 
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.status-badge.profitable { 
+    background-color: rgba(16, 185, 129, 0.15); 
+    color: #34d399; 
+}
+
+.status-badge.negative { 
+    background-color: rgba(239, 68, 68, 0.15); 
+    color: #f87171; 
+}
+
+.results-grid { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+
+.result-item { 
+    display: flex; 
+    justify-content: space-between; 
+    font-size: 0.95rem; 
+}
+
+.font-bold { 
+    font-weight: 700; 
+    border-top: 1px solid var(--border-color); 
+    padding-top: 8px; 
+}
+
+/* --- Filtered Timeline Accumulator Card Layout (Dropdown Style) --- */
+.stats-banner {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.stats-val {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #34d399; /* Green profit layout accent */
+    letter-spacing: -1px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.stats-val.negative { 
+    color: #f87171; /* Loss Red layout accent */
+}
+
+/* Interactive Dropdown Report Framework Matrix Grid */
+.timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.timeline-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.timeline-col:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.timeline-label {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* iOS Native-Friendly Dark Dashboard Selection Menus */
+.filter-dropdown {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    width: 90%;
+    max-width: 140px;
+    text-align: center;
+    margin-bottom: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.filter-dropdown:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #3b82f6;
+}
+
+.filter-dropdown option {
+    background-color: #0f141c;
+    color: #ffffff;
+}
+
+.timeline-val {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-top: 4px;
+}
+
+/* --- Dark Theme Data Table Logs Layout --- */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.table-wrapper { 
+    overflow-x: auto; 
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left; 
+    font-size: 0.9rem; 
+}
+
+th, td { 
+    padding: 12px; 
+    border-bottom: 1px solid var(--border-color); 
+}
+
+th { 
+    background-color: #131924; /* Dark table header background */
+    color: var(--text-muted); 
+}
+
+.text-green { 
+    color: #34d399; 
+    font-weight: 600; 
+}
+
+.text-red { 
+    color: #f87171; 
+    font-weight: 600; 
+}
+
+.action-cell { 
+    text-align: center; 
+}
+
+/* Mobile responsive constraints for tiny screens */
+@media (max-width: 480px) {
+    .timeline-grid {
+        gap: 6px;
+    }
+    .filter-dropdown {
+        font-size: 0.75rem;
+        padding: 6px 4px;
+        width: 95%;
+    }
+    .timeline-val {
+        font-size: 1rem;
+    }
+    .stats-val {
+        font-size: 2.1rem;
+    }
+}
